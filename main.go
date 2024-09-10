@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"os"
 
@@ -16,6 +17,10 @@ import (
 var scheme *runtime.Scheme
 
 func init() {
+	// The indirect import "sigs.k8s.io/controller-runtime/pkg/client/config" adds the "--kubeconfig" cli flag to the app.
+	// See https://github.com/kubernetes-sigs/controller-runtime/blob/b901db121e1f53c47ec9f9683fad90a546688c3e/pkg/client/config/config.go#L44
+	// But cli flags won't work unless they're explicitly parsed by the app with flag.Parse(). Run app with --help to check it.
+	flag.Parse()
 	scheme = runtime.NewScheme()
 }
 
